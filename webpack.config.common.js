@@ -6,11 +6,14 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
     context: path.resolve(__dirname, "src"),
-    entry: "./index.js",
+    entry: "./index.ts",
     output: {
         filename: "[contenthash].bundle.js",
         path: path.resolve(__dirname, "dist"),
         clean: true
+    },
+    resolve: {
+        extensions: ['.tsx', '.ts', '.js']
     },
     plugins: [
         new HtmlWebpackPlugin({
@@ -50,7 +53,12 @@ module.exports = {
                     loader: "file-loader",
                 },
                 ],
-      },
+            },
+            {
+                test: /\.[tj]sx?$/,
+                use: 'ts-loader',
+                exclude: /node_modules/
+            }
         ]
     }
 };
